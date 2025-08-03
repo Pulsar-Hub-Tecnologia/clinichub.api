@@ -2,13 +2,14 @@
 import handlebars from 'handlebars';
 import fs from 'fs/promises';
 import resend from '@src/modules/mailer';
+import { CreateEmailResponse } from 'resend';
 
 async function sendMail(
   templateName: string,
   from: string,
   subject: string,
   body: any,
-) {
+): Promise<CreateEmailResponse>{
   try {
     // 1. Lê e compila o template Handlebars
     const templatePath = `./src/resources/mail/${templateName}.html`;
@@ -23,8 +24,7 @@ async function sendMail(
       subject,
       html: htmlToSend,
     });
-
-    console.log(`E-mail enviado para ${body.email}`, resendmail);
+    return resendmail
   } catch (error) {
     console.error('Falha ao enviar e-mail:', error);
     throw error;

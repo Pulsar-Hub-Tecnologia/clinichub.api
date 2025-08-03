@@ -25,7 +25,7 @@ interface UserInterface {
 
 class AuthController {
   /**
-   * @swagger
+   * @swagger˜
    * /auth/:
    *   post:
    *     summary: Autentica um usuário

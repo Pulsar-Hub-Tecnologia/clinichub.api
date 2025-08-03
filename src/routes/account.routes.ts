@@ -4,8 +4,9 @@ import AccountController from '@controllers/AccountController';
 
 const AccountRoutes = Router();
 AccountRoutes.post('/', AccountController.create);
-AccountRoutes.get('/', AccountController.findAccount);
 AccountRoutes.put('/', AccountController.update);
+AccountRoutes.get('/', AccountController.validateAccount);
+AccountRoutes.get('/validate/', AccountController.validateAccount);
 
 
 export default AccountRoutes;

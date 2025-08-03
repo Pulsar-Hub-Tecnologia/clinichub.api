@@ -1,12 +1,17 @@
 import { HttpError } from "./http-errors";
 
-export class UserAlreadyExistsError extends HttpError {
+export class Conflict extends HttpError {
   constructor(message = "O usuário já está cadastrado.") {
     super(409, message);
   }
 }
 
-export class RequestNotComplete extends HttpError {
+export class BadRequest extends HttpError {
+  constructor(message = "Dados incompletos.") {
+    super(400, message);
+  }
+}
+export class NotFound extends HttpError {
   constructor(message = "Dados incompletos.") {
     super(400, message);
   }

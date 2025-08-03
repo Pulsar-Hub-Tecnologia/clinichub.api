@@ -1,9 +1,11 @@
 import { Request, Response } from 'express';
 import Users from '@entities/User';
 import emailValidator from '@utils/emailValidator';
-import createAccountService from '../services/account/createAccount.service';
-import { RequestNotComplete, UserAlreadyExistsError } from '../errors/controlled-errors';
-import findAccountService from '../services/account/findAccount.service';
+import createAccountService from '../services/app/account/create';
+import validateAccountService from '../services/app/account/validate';
+import { HttpError } from '../../utils/http/errors/http-errors';
+import updateUserService from '../services/app/account/update';
+import findAccount from '../services/app/account/find';
 
 interface AccountInterface {
   id?: string;
@@ -17,14 +19,8 @@ interface AccountInterface {
   secret?: string;
 }
 
-interface WorkspaceInterface extends AccountInterface {
-  type: string;
-  workspaceName: string;
-  cnpj?: string;
-}
-
 interface CreateAccountBody {
-  workspace_type: "PERSONAL" | "BUSINESS";
+  workspace_type: 'PERSONAL' | 'BUSINESS';
   email: string;
   password: string;
   name: string;
@@ -35,110 +31,68 @@ interface CreateAccountBody {
 }
 
 class AccountController {
-  public async create(req: Request, res: Response): Promise<void> {
+  public async find(req: Request, res: Response): Promise<void> {
     try {
-      const body = req.body as CreateAccountBody
+      const user = await findAccount(req.userId);
 
-      const created_account = await createAccountService(body)
-
-      res.status(201).json({
-        message: 'Conta criada com sucesso!',
-        user: {
-          id: created_account.user.id,
-          name: created_account.user.name,
-          email: created_account.user.email,
-          cpf: created_account.user.cpf,
-          picture: created_account.user.picture,
-          accesses: created_account.user.accesses
-        },
-        workspace: {
-          id: created_account.workspace.id,
-          name: created_account.workspace.name,
-          cnpj: created_account.workspace.cnpj,
-          picture: created_account.workspace.picture
-        },
-        access: {
-          id: created_account.access.id,
-          role: created_account.access.role
-        }
-      });
+      res.status(200).json({ message: 'Success!', user });
       return;
-
     } catch (error) {
-      console.log(error)
-      if (error instanceof RequestNotComplete) {
-        res.status(400).json({ message: error.message })
-        return;
-      }
-
-      if (error instanceof UserAlreadyExistsError) {
-        res.status(409).json({ message: error.message })
-        return;
-      }
-
-      res.status(500).json({ message: "Erro interno do servidor." });
+      console.log(error);
+      if (error instanceof HttpError)
+        res.status(error.status).json({ message: error.message });
       return;
     }
   }
 
-  public async findAccount(req: Request, res: Response): Promise<void> {
+  public async validateAccount(req: Request, res: Response): Promise<void> {
     try {
-      const field = req.query.field as "id" | "email" | "cpf";
+      const field = req.query.field as 'id' | 'email' | 'cpf';
       const value = req.query.value as string;
 
-      await findAccountService({
+      const has_user = await validateAccountService({
         field,
-        value
-      })
+        value,
+      });
 
-      res.status(200).json({ message: "Usuário encontrado!" });
+      res.status(200).json({ message: 'Success!', has_user });
       return;
     } catch (error) {
-      if (error instanceof RequestNotComplete) {
-        res.status(400).json({ message: error.message })
-        return
-      }
+      console.log(error);
+      if (error instanceof HttpError)
+        res.status(error.status).json({ message: error.message });
+      return;
+    }
+  }
 
-      if (error instanceof UserAlreadyExistsError) {
-        res.status(409).json({ message: error.message })
-        return
-      }
+  public async create(req: Request, res: Response): Promise<void> {
+    try {
+      const body = req.body as CreateAccountBody;
 
-      res.status(500).json({ error: 'Erro interno ao localizar conta.' });
-      return
+      await createAccountService(body);
+
+      res.status(201).json({
+        message: 'Conta criada com sucesso!',
+      });
+      return;
+    } catch (error) {
+      console.log(error);
+      if (error instanceof HttpError)
+        res.status(error.status).json({ message: error.message });
+      return;
     }
   }
 
   public async update(req: Request, res: Response): Promise<void> {
     try {
-      const { id } = req.params;
-      const { name, email }: AccountInterface = req.body;
-
-      if (email && !emailValidator(email)) {
-        res.status(400).json({ message: 'Formato de e-mail inválido.' });
-        return;
-      }
-
-      const user = await Users.findOne(id);
-
-      if (!user) {
-        res.status(404).json({ message: 'Usuário não encontrado.' });
-        return;
-      }
-
-      const valuesToUpdate = {
-        name: name || user.name,
-        email: email || user.email,
-      };
-
-      await Users.update(user.id, { ...valuesToUpdate });
+      await updateUserService(req.userId, req.body);
 
       res.status(204).send({ message: 'Usuário atualizado com sucesso' });
     } catch (error) {
-      console.error(error);
-      res.status(500).json({
-        message: 'Erro interno ao atualizar o usuário, tente novamente.',
-      });
+      console.log(error);
+      if (error instanceof HttpError)
+        res.status(error.status).json({ message: error.message });
+      return;
     }
   }
 }
