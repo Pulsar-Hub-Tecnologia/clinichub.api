@@ -17,6 +17,7 @@ export async function ensureAuthenticated(req: Request, res: Response, next: Nex
 
     jwt.verify(token, `${process.env.SECRET}`, (err, decoded: any) => {
       if (err) return res.status(401).send({ message: 'Token invalid' });
+      
       req.userId = decoded.id;
 
       if (next) return next();

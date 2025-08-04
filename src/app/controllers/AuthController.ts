@@ -24,48 +24,7 @@ interface UserInterface {
  */
 
 class AuthController {
-  /**
-   * @swagger˜
-   * /auth/:
-   *   post:
-   *     summary: Autentica um usuário
-   *     tags: [Autenticação]
-   *     requestBody:
-   *       required: true
-   *       content:
-   *         application/json:
-   *           schema:
-   *             type: object
-   *             properties:
-   *               email:
-   *                 type: string
-   *               password:
-   *                 type: string
-   *     responses:
-   *       200:
-   *         description: Autenticação bem-sucedida
-   *         content:
-   *           application/json:
-   *             schema:
-   *               type: object
-   *               properties:
-   *                 id:
-   *                   type: string
-   *                 email:
-   *                   type: string
-   *                 name:
-   *                   type: string
-   *                 has_configured:
-   *                   type: boolean
-   *       400:
-   *         description: Valores inválidos para o usuário
-   *       404:
-   *         description: Usuário não encontrado
-   *       401:
-   *         description: Senha inválida
-   *       500:
-   *         description: Erro interno na autenticação
-   */
+
   public async authenticate(req: Request, res: Response): Promise<void> {
     try {
       const { email, password }: UserInterface = req.body;
@@ -105,46 +64,7 @@ class AuthController {
       res.status(500).json({ error: 'Erro interno na autenticação.' });
     }
   }
-  /**
-   * @swagger
-   * /auth/forgot-password:
-   *   post:
-   *     summary: Recupera a senha de um usuário
-   *     tags: [Autenticação]
-   *     requestBody:
-   *       required: true
-   *       content:
-   *         application/json:
-   *           schema:
-   *             type: object
-   *             properties:
-   *               email:
-   *                 type: string
-   *     responses:
-   *       200:
-   *         description: Link enviado para o e-mail
-   *         content:
-   *           application/json:
-   *             schema:
-   *               type: object
-   *               properties:
-   *                 id:
-   *                   type: string
-   *                 email:
-   *                   type: string
-   *                 name:
-   *                   type: string
-   *                 has_configured:
-   *                   type: boolean
-   *       400:
-   *         description: Valores inválidos para o usuário
-   *       404:
-   *         description: Usuário não encontrado
-   *       401:
-   *         description: Senha inválida
-   *       500:
-   *         description: Erro interno na autenticação
-   */
+
   public async forgotPassword(req: Request, res: Response): Promise<void> {
     try {
       const { email }: UserInterface = req.body;
@@ -191,46 +111,6 @@ class AuthController {
     }
   }
 
-  /**
-   * @swagger
-   * /auth/forgot-password:
-   *   post:
-   *     summary: Recupera a senha de um usuário
-   *     tags: [Autenticação]
-   *     requestBody:
-   *       required: true
-   *       content:
-   *         application/json:
-   *           schema:
-   *             type: object
-   *             properties:
-   *               email:
-   *                 type: string
-   *     responses:
-   *       200:
-   *         description: Link enviado para o e-mail
-   *         content:
-   *           application/json:
-   *             schema:
-   *               type: object
-   *               properties:
-   *                 id:
-   *                   type: string
-   *                 email:
-   *                   type: string
-   *                 name:
-   *                   type: string
-   *                 has_configured:
-   *                   type: boolean
-   *       400:
-   *         description: Valores inválidos para o usuário
-   *       404:
-   *         description: Usuário não encontrado
-   *       401:
-   *         description: Senha inválida
-   *       500:
-   *         description: Erro interno na autenticação
-   */
   public async resetPassword(req: Request, res: Response): Promise<void> {
     try {
       const { email, password, token }: UserInterface = req.body;

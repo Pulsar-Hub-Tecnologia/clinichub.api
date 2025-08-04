@@ -14,8 +14,8 @@ interface UserInterface {
 /**
  * @swagger
  * tags:
- *   name: Usuários
- *   description: Operações relativas aos usuários
+ *   name: Acessos
+ *   description: Operações relativas aos acessos
  */
 
 class UserController {
@@ -35,7 +35,7 @@ class UserController {
         name: access.user.name,
         email: access.user.email,
         role: access.role,
-      }
+      };
 
       res.status(200).json(user);
     } catch (error) {
@@ -45,7 +45,6 @@ class UserController {
         .json({ error: 'Erro interno ao buscar usuário, tente novamente.' });
     }
   }
-
 }
 
 export default new UserController();

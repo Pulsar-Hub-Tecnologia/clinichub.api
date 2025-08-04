@@ -35,7 +35,9 @@ class AccountController {
     try {
       const user = await findAccount(req.userId);
 
-      res.status(200).json({ message: 'Success!', user });
+      res.status(200).json({
+        message: 'Success!',
+        user });
       return;
     } catch (error) {
       console.log(error);
@@ -55,7 +57,10 @@ class AccountController {
         value,
       });
 
-      res.status(200).json({ message: 'Success!', has_user });
+      res.status(200).json({
+        message: 'Success!',
+        has_user,
+      });
       return;
     } catch (error) {
       console.log(error);
@@ -69,10 +74,11 @@ class AccountController {
     try {
       const body = req.body as CreateAccountBody;
 
-      await createAccountService(body);
+      const user = await createAccountService(body);
 
       res.status(201).json({
         message: 'Conta criada com sucesso!',
+        id: user.id,
       });
       return;
     } catch (error) {
@@ -86,7 +92,6 @@ class AccountController {
   public async update(req: Request, res: Response): Promise<void> {
     try {
       await updateUserService(req.userId, req.body);
-
       res.status(204).send({ message: 'Usuário atualizado com sucesso' });
     } catch (error) {
       console.log(error);
