@@ -2,10 +2,10 @@ import User from '@entities/User';
 import crypto from 'crypto';
 import {
   BadRequest,
+  InternalServerError,
   NotFound,
 } from '@utils/http/errors/controlled-errors';
 import { HttpError } from '@utils/http/errors/http-errors';
-import { InternalServerError } from '@utils/http/errors/internal-errors';
 import sendMail from '../../mail/sendEmail';
 
 
@@ -57,7 +57,6 @@ export default async function forgotPasswordService(
       message: 'Link de recuperação enviado para o e-mail.'
     };
   } catch (error) {
-    console.log(error)
     if (error instanceof HttpError) {
       throw error;
     }

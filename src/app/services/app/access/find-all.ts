@@ -1,7 +1,6 @@
 import Access from '@entities/Access';
-import { NotFound } from '@utils/http/errors/controlled-errors';
+import { InternalServerError, NotFound } from '@utils/http/errors/controlled-errors';
 import { HttpError } from '@utils/http/errors/http-errors';
-import { InternalServerError } from '@utils/http/errors/internal-errors';
 
 
 interface AccessUser {

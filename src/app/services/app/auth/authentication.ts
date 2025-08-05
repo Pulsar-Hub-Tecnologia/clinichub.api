@@ -3,11 +3,11 @@ import User from '@entities/User';
 import { generateToken } from '@utils/auth/generateToken';
 import {
   BadRequest,
+  InternalServerError,
   NotFound,
   Unauthorized,
 } from '@utils/http/errors/controlled-errors';
 import { HttpError } from '@utils/http/errors/http-errors';
-import { InternalServerError } from '@utils/http/errors/internal-errors';
 import bcrypt from 'bcryptjs';
 
 interface WorkspaceAccesses {
@@ -60,7 +60,6 @@ export default async function authentication(
       token: generateToken({ id: user.id }),
     };
   } catch (error) {
-    console.log(error)
     if (error instanceof HttpError) {
       throw error;
     }

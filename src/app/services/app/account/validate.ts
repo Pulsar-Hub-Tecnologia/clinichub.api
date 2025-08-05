@@ -1,7 +1,7 @@
 import User from '@entities/User';
-import { BadRequest, Conflict } from '@utils/http/errors/controlled-errors';
+import { BadRequest, Conflict, InternalServerError } from '@utils/http/errors/controlled-errors';
 import { HttpError } from '@utils/http/errors/http-errors';
-import { InternalServerError } from '@utils/http/errors/internal-errors';
+
 
 interface FindAccountProps {
   field: 'id' | 'email' | 'name' | 'cpf';
@@ -25,7 +25,6 @@ export default async function validateAccountService({
 
     return !!user_exists
   } catch (error) {
-    console.log(error)
     if (error instanceof HttpError) {
       throw error;
     }

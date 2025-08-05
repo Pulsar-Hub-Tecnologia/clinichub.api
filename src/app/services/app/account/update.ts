@@ -1,8 +1,8 @@
 import User from '@entities/User';
 import emailValidator from '@utils/emailValidator';
-import { BadRequest, NotFound } from '@utils/http/errors/controlled-errors';
+import { BadRequest, InternalServerError, NotFound } from '@utils/http/errors/controlled-errors';
 import { HttpError } from '@utils/http/errors/http-errors';
-import { InternalServerError } from '@utils/http/errors/internal-errors';
+
 
 export default async function updateUserService(id: string, body: any) {
   const { email, name }: User = body;
@@ -25,7 +25,6 @@ export default async function updateUserService(id: string, body: any) {
 
     await User.update(user.id, { ...valuesToUpdate });
   } catch (error) {
-    console.log(error)
     if (error instanceof HttpError) {
       throw error;
     }

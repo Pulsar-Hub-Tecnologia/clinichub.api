@@ -2,11 +2,11 @@ import User from '@entities/User';
 import crypto from 'crypto';
 import {
   BadRequest,
+  InternalServerError,
   NotFound,
   Unauthorized,
 } from '@utils/http/errors/controlled-errors';
 import { HttpError } from '@utils/http/errors/http-errors';
-import { InternalServerError } from '@utils/http/errors/internal-errors';
 import bcrypt from 'bcryptjs';
 
 export default async function resetPasswordService(
@@ -42,7 +42,6 @@ export default async function resetPasswordService(
       message: 'Senha alterada com sucesso!',
     };
   } catch (error) {
-    console.log(error)
     if (error instanceof HttpError) {
       throw error;
     }
