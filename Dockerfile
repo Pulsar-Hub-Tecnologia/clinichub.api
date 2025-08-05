@@ -8,8 +8,8 @@ RUN yarn install
 
 COPY . .
 
-ARG CLIENT_PORT
+ARG APP_PORT
 
-EXPOSE ${CLIENT_PORT}
+EXPOSE ${APP_PORT}
 
 CMD ["yarn", "dev"]
