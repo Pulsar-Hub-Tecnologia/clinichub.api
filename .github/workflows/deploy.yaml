@@ -38,9 +38,9 @@ jobs:
           cd /home/${{ secrets.SERVER_USER }}/$TARGET_DIR
           git config --global --add safe.directory /home/${{ secrets.SERVER_USER }}/$TARGET_DIR
           git pull origin $BRANCH
-          yarn typeorm migration:run
-          yarn typeorm schema:sync
           sudo docker-compose stop app
           sudo docker-compose rm -f app
           sudo docker-compose up --build -d app
+          yarn typeorm migration:run
+          yarn typeorm schema:sync
         EOF
