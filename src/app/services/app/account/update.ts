@@ -25,6 +25,7 @@ export default async function updateUserService(id: string, body: any) {
 
     await User.update(user.id, { ...valuesToUpdate });
   } catch (error) {
+    console.log(error)
     if (error instanceof HttpError) {
       throw error;
     }

@@ -25,6 +25,7 @@ export default async function validateAccountService({
 
     return !!user_exists
   } catch (error) {
+    console.log(error)
     if (error instanceof HttpError) {
       throw error;
     }

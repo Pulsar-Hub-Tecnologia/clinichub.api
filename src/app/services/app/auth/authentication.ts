@@ -60,6 +60,7 @@ export default async function authentication(
       token: generateToken({ id: user.id }),
     };
   } catch (error) {
+    console.log(error)
     if (error instanceof HttpError) {
       throw error;
     }

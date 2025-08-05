@@ -42,6 +42,7 @@ export default async function resetPasswordService(
       message: 'Senha alterada com sucesso!',
     };
   } catch (error) {
+    console.log(error)
     if (error instanceof HttpError) {
       throw error;
     }
