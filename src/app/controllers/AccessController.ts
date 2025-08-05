@@ -1,5 +1,6 @@
 import { Request, Response } from 'express';
 import Access from '@entities/Access';
+import findAccessService from '../services/app/access/find-all';
 
 interface UserInterface {
   id?: string;
@@ -23,21 +24,9 @@ class UserController {
     try {
       const id = req.params.id;
 
-      const access = await Access.findOne(id, { relations: ['user'] });
+      const accesss = await findAccessService(id)
 
-      if (!access) {
-        res.status(404).json({ message: 'Usuário não encontrado.' });
-        return;
-      }
-
-      const user = {
-        id: access.id,
-        name: access.user.name,
-        email: access.user.email,
-        role: access.role,
-      };
-
-      res.status(200).json(user);
+      res.status(200).json(accesss);
     } catch (error) {
       console.error(error);
       res

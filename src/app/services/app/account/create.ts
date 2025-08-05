@@ -124,6 +124,6 @@ export default async function createAccountService({
       throw error;
     }
 
-    throw new InternalServerError('Falha interna!');
+    throw new InternalServerError('Erro ao criar o usuário!');
   }
 }

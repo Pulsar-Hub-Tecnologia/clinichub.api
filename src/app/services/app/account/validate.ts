@@ -11,7 +11,7 @@ interface FindAccountProps {
 export default async function validateAccountService({
   field,
   value,
-}: FindAccountProps) {
+}: FindAccountProps): Promise<boolean> {
   try {
     if (!field || !value) {
       throw new BadRequest('Dados incompletos!');
@@ -29,7 +29,7 @@ export default async function validateAccountService({
       throw error;
     }
     throw new InternalServerError(
-      'Falha interna ao verificar se a conta existe!',
+      'Erro ao validar conta do usuário.',
     );
   }
 }

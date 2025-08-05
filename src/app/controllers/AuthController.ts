@@ -5,6 +5,7 @@ import dotenv from 'dotenv';
 import crypto from 'crypto';
 import { generateToken } from '@utils/auth/generateToken';
 import sendMail from '@src/app/services/mail/sendEmail';
+import authentication from '../services/app/auth/authentication';
 
 dotenv.config();
 
@@ -29,36 +30,9 @@ class AuthController {
     try {
       const { email, password }: UserInterface = req.body;
 
-      if (!email || !password) {
-        res.status(400).json({ message: 'Valores inválidos para o usuário.' });
-        return;
-      }
+      const auth = await authentication(email, password)
 
-      const user = await User.findOne({ where: { email }, relations: ['accesses', 'accesses.workspace'] });
-
-      if (!user) {
-        res.status(404).json({ message: 'Usuário não encontrado.' });
-        return;
-      }
-
-      if (!(await bcrypt.compare(password, user.password_hash))) {
-        res.status(401).json({ message: 'Senha inválida.' });
-        return;
-      }
-
-      const accesses = user.accesses.map(access => ({
-        picture: access.workspace.picture,
-        workspace_id: access.workspace.id,
-        type: access.workspace.type,
-        name: access.workspace.name,
-        role: access.role,
-      }));
-
-      res.status(200).json({
-        id: user.id,
-        accesses,
-        token: generateToken({ id: user.id }),
-      });
+      res.status(200).json(auth);
     } catch (error) {
       console.error(error);
       res.status(500).json({ error: 'Erro interno na autenticação.' });
@@ -68,38 +42,6 @@ class AuthController {
   public async forgotPassword(req: Request, res: Response): Promise<void> {
     try {
       const { email }: UserInterface = req.body;
-
-      if (!email) {
-        res.status(400).json({ message: 'Valores inválidos para o usuário.' });
-        return;
-      }
-
-      const user = await User.findOne({ email });
-
-      if (!user) {
-        res.status(404).json({ message: 'Usuário não encontrado' });
-        return;
-      }
-
-      const token = crypto.randomBytes(20).toString('hex'); // token que será enviado via email.
-
-      const now = new Date();
-      now.setHours(now.getHours() + 1);
-
-      await User.update(user.id, {
-        token_reset_password: token,
-        reset_password_expires: now,
-      });
-
-      const client = process.env.CLIENT_CONNECTION;
-
-      // Envie o email e aguarde a conclusão antes de enviar a resposta
-      await sendMail('forgotPassword', 'no-reply', 'Recuperação de Senha', {
-        client,
-        name: user.name,
-        token,
-        email: user.email,
-      });
 
       // Envie a resposta após o envio do email
       res

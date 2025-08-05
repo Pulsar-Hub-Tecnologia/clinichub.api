@@ -12,7 +12,7 @@ export default async function findAccount(id: string): Promise<User>{
     const user = await User.findOne(id);
 
     if (!user) {
-      throw new NotFound('Dados incompletos!');
+      throw new NotFound('Usuário não encontrado.');
     }
 
     return user
@@ -21,7 +21,7 @@ export default async function findAccount(id: string): Promise<User>{
       throw error;
     }
     throw new InternalServerError(
-      'Falha interna ao verificar se a conta existe!',
+      'Erro ao buscar conta.',
     );
   }
 }
