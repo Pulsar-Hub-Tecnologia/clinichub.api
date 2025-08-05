@@ -36,6 +36,7 @@ jobs:
 
         ssh -o StrictHostKeyChecking=no ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }} << EOF
           cd /home/${{ secrets.SERVER_USER }}/$TARGET_DIR
+          git config --global --add safe.directory /home/${{ secrets.SERVER_USER }}/$TARGET_DIR
           git pull origin $BRANCH
           yarn typeorm migration:run
           yarn typeorm schema:sync
