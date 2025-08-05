@@ -6,8 +6,7 @@ import Workspace from '@entities/Workspace';
 import Access from '@entities/Access';
 import { firstName } from '@utils/formats';
 import { HttpError } from '@utils/http/errors/http-errors';
-import { InternalServerError } from '@utils/http/errors/internal-errors';
-import { BadRequest, Conflict } from '@utils/http/errors/controlled-errors';
+import { BadRequest, Conflict, InternalServerError } from '@utils/http/errors/controlled-errors';
 import emailValidator from '@utils/emailValidator';
 
 interface CreateAccountProps {
@@ -119,7 +118,6 @@ export default async function createAccountService({
       id: user.id,
     };
   } catch (error) {
-    console.log(error);
     if (error instanceof HttpError) {
       throw error;
     }

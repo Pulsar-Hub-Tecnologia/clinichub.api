@@ -12,12 +12,17 @@ export class BadRequest extends HttpError {
   }
 }
 export class NotFound extends HttpError {
-  constructor(message = "Dados incompletos.") {
-    super(400, message);
+  constructor(message = "Não encontrado.") {
+    super(404, message);
   }
 }
 export class Unauthorized extends HttpError {
   constructor(message = "Não autorizado") {
     super(401, message);
+  }
+}
+export class InternalServerError extends HttpError {
+  constructor(message = "Erro interno no servidor") {
+    super(500, message);
   }
 }
