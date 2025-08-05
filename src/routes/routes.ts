@@ -9,7 +9,7 @@ import { ensureAuthenticated } from '@middlewares/ensureAuthenticated';
 const routes = Router();
 
 const port = process.env.APP_PORT;
-const base = { 'API ClinicHUB':  process.env.DB_NAME };
+const base = { 'API ClinicHUB':  process.env.ENVIROMENT };
 
 const swaggerOptions = {
   definition: {
