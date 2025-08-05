@@ -1,45 +1,27 @@
-import Access from '@entities/Access';
 import User from '@entities/User';
-import { generateToken } from '@utils/auth/generateToken';
+import crypto from 'crypto';
 import {
   BadRequest,
   NotFound,
-  Unauthorized,
 } from '@utils/http/errors/controlled-errors';
 import { HttpError } from '@utils/http/errors/http-errors';
 import { InternalServerError } from '@utils/http/errors/internal-errors';
-import bcrypt from 'bcryptjs';
 import sendMail from '../../mail/sendEmail';
 
-interface WorkspaceAccesses {
-  picture: string;
-  workspace_id: string;
-  type: string;
-  name: string;
-  role: string;
-}
 
-interface Authentication {
-  user: User;
-  accesses: WorkspaceAccesses[];
-  token: string;
-}
-
-export default async function authentication(
+export default async function forgotPasswordService(
   email: string,
-  password: string,
-): Promise<Authentication> {
+): Promise<{ message: string }> {
   try {
     if (!email) {
-      res.status(400).json({ message: 'Valores inválidos para o usuário.' });
-      return;
+      throw new BadRequest('Dados inválidos.');
     }
 
     const user = await User.findOne({ email });
 
     if (!user) {
-      res.status(404).json({ message: 'Usuário não encontrado' });
-      return;
+
+      throw new NotFound('Usuário não encontrado');
     }
 
     const token = crypto.randomBytes(20).toString('hex'); // token que será enviado via email.
@@ -67,10 +49,12 @@ export default async function authentication(
       },
     );
 
+    if(!mail.data?.id){
+      throw new InternalServerError();
+    }
+
     return {
-      user,
-      accesses,
-      token: generateToken(user),
+      message: 'Link de recuperação enviado para o e-mail.'
     };
   } catch (error) {
     if (error instanceof HttpError) {

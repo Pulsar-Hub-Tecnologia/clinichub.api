@@ -1,11 +1,11 @@
 import User from '@entities/User';
 import { Request, Response } from 'express';
-import bcrypt from 'bcryptjs';
 import dotenv from 'dotenv';
-import crypto from 'crypto';
 import { generateToken } from '@utils/auth/generateToken';
 import sendMail from '@src/app/services/mail/sendEmail';
 import authentication from '../services/app/auth/authentication';
+import forgotPasswordService from '../services/app/auth/forgot-password';
+import resetPasswordService from '../services/app/auth/reset-password';
 
 dotenv.config();
 
@@ -43,10 +43,11 @@ class AuthController {
     try {
       const { email }: UserInterface = req.body;
 
+      const { message } = await forgotPasswordService(email)
       // Envie a resposta após o envio do email
       res
         .status(200)
-        .json({ message: 'E-mail de recuperação de senha enviado.' });
+        .json({ message: message});
     } catch (error) {
       console.error(error);
       res.status(500).json({ error: 'Erro interno na autenticação.' });
@@ -57,37 +58,9 @@ class AuthController {
     try {
       const { email, password, token }: UserInterface = req.body;
 
-      if (!email || !password || !token) {
-        res
-          .status(400)
-          .json({ message: 'Valores inválidos para redefinição de senha' });
-        return;
-      }
-      const user = await User.findOne({ email });
+      const { message } = await resetPasswordService(email, password, token)
 
-      if (!user) {
-        res.status(404).json({ message: 'Usuário não encontrado' });
-        return;
-      }
-      if (token !== user.token_reset_password) {
-        res.status(404).json({ message: 'Token inválido' });
-        return;
-      }
-      const now = new Date();
-
-      if (now > user.reset_password_expires) {
-        res.status(400).json({ message: 'Token expirado' });
-        return;
-      }
-      const password_hash = await bcrypt.hash(password, 10);
-
-      await User.update(user.id, {
-        password_hash,
-        reset_password_expires: undefined,
-        token_reset_password: undefined,
-      });
-
-      res.status(200).json({ message: 'Senha alterada com sucesso ' });
+      res.status(200).json({ message: message });
     } catch (error) {
       console.log(error);
       res.status(400).json({ error: 'Cannot reset password, try again' });
