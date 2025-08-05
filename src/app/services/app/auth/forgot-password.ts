@@ -57,6 +57,7 @@ export default async function forgotPasswordService(
       message: 'Link de recuperação enviado para o e-mail.'
     };
   } catch (error) {
+    console.log(error)
     if (error instanceof HttpError) {
       throw error;
     }

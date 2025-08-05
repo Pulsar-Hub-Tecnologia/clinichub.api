@@ -3,7 +3,6 @@ import AuthRoutes from './auth.routes';
 import AccountRoutes from './account.routes';
 import swaggerJsdoc from 'swagger-jsdoc';
 import swaggerUi from 'swagger-ui-express';
-import { ensureProfile } from '@middlewares/ensureProfile';
 import { ensureAuthenticated } from '@middlewares/ensureAuthenticated';
 
 const routes = Router();

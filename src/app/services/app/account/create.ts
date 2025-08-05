@@ -119,7 +119,7 @@ export default async function createAccountService({
       id: user.id,
     };
   } catch (error) {
-    console.log('create');
+    console.log(error);
     if (error instanceof HttpError) {
       throw error;
     }

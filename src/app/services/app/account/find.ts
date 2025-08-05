@@ -17,6 +17,7 @@ export default async function findAccount(id: string): Promise<User>{
 
     return user
   } catch (error) {
+    console.log(error)
     if (error instanceof HttpError) {
       throw error;
     }

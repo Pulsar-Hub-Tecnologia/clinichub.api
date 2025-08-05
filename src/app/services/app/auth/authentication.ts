@@ -57,9 +57,10 @@ export default async function authentication(
     return {
       user,
       accesses,
-      token: generateToken(user),
+      token: generateToken({ id: user.id }),
     };
   } catch (error) {
+    console.log(error)
     if (error instanceof HttpError) {
       throw error;
     }
