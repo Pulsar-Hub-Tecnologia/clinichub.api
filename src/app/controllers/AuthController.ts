@@ -49,7 +49,7 @@ class AuthController {
 
       const auth = await validateEmailAndAuthenticate(email, token);
 
-      console.log('EMAIL VALIDADO COM SUSESSU')
+      console.log('EMAIL VALIDADO COM SUSESSU');
       // Envie a resposta após o envio do email
       res.status(200).json(auth);
     } catch (error) {
@@ -61,9 +61,9 @@ class AuthController {
   }
   public async resendValidateEmail(req: Request, res: Response): Promise<void> {
     try {
-      const { email } = req.body
+      const { email } = req.body;
 
-      const resend = await resendValidateEmailService(email);
+      const resend = await resendValidateEmailService({ email });
 
       res.status(200).json(resend);
       return;
