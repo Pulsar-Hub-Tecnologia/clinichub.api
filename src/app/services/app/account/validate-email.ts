@@ -45,6 +45,8 @@ export default async function validateEmailAndAuthenticate(
       throw new Unauthorized();
     }
 
+    console.log('DECODED JWT =====>', decoded);
+
     const user = await User.findOne(decoded.id, {
       where: { email: decoded.email },
       relations: ['accesses', 'accesses.workspace'],
