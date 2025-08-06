@@ -19,7 +19,7 @@ async function sendMail(
 
     // 2. Envia o e-mail usando a API do Resend
     const resendmail = await resend.emails.send({
-      from: `ClinicHUB <${from}@case.app.br>`,
+      from: `ClinicHUB <${from}@pulsarhub.com.br>`,
       to: body.email,
       subject,
       html: htmlToSend,
