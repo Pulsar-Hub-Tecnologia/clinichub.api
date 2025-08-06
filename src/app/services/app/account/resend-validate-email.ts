@@ -17,6 +17,8 @@ export default async function resendValidateEmailService({
   id: string;
 }> {
   try {
+
+    console.log(email)
     if (
       !email
     ) {

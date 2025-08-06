@@ -63,9 +63,9 @@ class AuthController {
     try {
       const { email } = req.body
 
-      const workspace_token = await resendValidateEmailService(email);
+      const resend = await resendValidateEmailService(email);
 
-      res.status(200).json(workspace_token);
+      res.status(200).json(resend);
       return;
     } catch (error) {
       console.log(error);
