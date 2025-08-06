@@ -37,6 +37,9 @@ class User extends BaseEntity {
   @Column({ nullable: true, default: false })
   has_reset_pass!: boolean;
 
+  @Column({ default: false })
+  has_verified_email!: boolean;
+
   @Column()
   password_hash!: string;
 

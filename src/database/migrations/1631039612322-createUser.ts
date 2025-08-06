@@ -46,6 +46,11 @@ export class createUser1631039612322 implements MigrationInterface {
             default: false,
           },
           {
+            name: 'has_verified_email',
+            type: 'boolean',
+            default: false,
+          },
+          {
             name: 'password_hash',
             type: 'varchar',
           },
