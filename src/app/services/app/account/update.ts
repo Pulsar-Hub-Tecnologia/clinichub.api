@@ -1,10 +1,10 @@
 import User from '@entities/User';
 import emailValidator from '@utils/emailValidator';
-import { BadRequest, NotFound } from '@utils/http/errors/controlled-errors';
+import { BadRequest, InternalServerError, NotFound } from '@utils/http/errors/controlled-errors';
 import { HttpError } from '@utils/http/errors/http-errors';
-import { InternalServerError } from '@utils/http/errors/internal-errors';
 
-export default async function updateUserService(id: string, body: any) {
+
+export default async function updateAccountService(id: string, body: any) {
   const { email, name }: User = body;
 
   try {
@@ -28,6 +28,6 @@ export default async function updateUserService(id: string, body: any) {
     if (error instanceof HttpError) {
       throw error;
     }
-    throw new InternalServerError('Erro ao buscar atualizar o usuário.');
+    throw new InternalServerError('Erro ao atualizar o usuário.');
   }
 }

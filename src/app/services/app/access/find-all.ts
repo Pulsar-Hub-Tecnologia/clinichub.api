@@ -1,7 +1,6 @@
 import Access from '@entities/Access';
-import { NotFound } from '@utils/http/errors/controlled-errors';
+import { InternalServerError, NotFound } from '@utils/http/errors/controlled-errors';
 import { HttpError } from '@utils/http/errors/http-errors';
-import { InternalServerError } from '@utils/http/errors/internal-errors';
 
 
 interface AccessUser {
@@ -33,7 +32,7 @@ export default async function findAccessService(access_id: string): Promise<Acce
       throw error;
     }
     throw new InternalServerError(
-      'Falha interna ao verificar se a conta existe!',
+      'Erro ao buscar acesssos.',
     );
   }
 }

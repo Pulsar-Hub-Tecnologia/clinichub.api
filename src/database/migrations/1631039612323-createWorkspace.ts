@@ -40,17 +40,17 @@ export class createWorkspace1631039612323 implements MigrationInterface {
             isNullable: true,
           },
           {
-            name: 'createdAt',
+            name: 'created_at',
             type: 'timestamp',
             default: 'now()',
           },
           {
-            name: 'updatedAt',
+            name: 'updated_at',
             type: 'timestamp',
             default: 'now()',
           },
           {
-            name: 'deletedAt',
+            name: 'deleted_at',
             type: 'timestamp',
             isNullable: true,
           },

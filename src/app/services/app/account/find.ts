@@ -1,7 +1,6 @@
 import User from '@entities/User';
-import { BadRequest, Conflict, NotFound } from '@utils/http/errors/controlled-errors';
+import { BadRequest,  InternalServerError, NotFound } from '@utils/http/errors/controlled-errors';
 import { HttpError } from '@utils/http/errors/http-errors';
-import { InternalServerError } from '@utils/http/errors/internal-errors';
 
 export default async function findAccount(id: string): Promise<User>{
   try {

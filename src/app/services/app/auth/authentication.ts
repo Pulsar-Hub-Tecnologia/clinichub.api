@@ -3,11 +3,11 @@ import User from '@entities/User';
 import { generateToken } from '@utils/auth/generateToken';
 import {
   BadRequest,
+  InternalServerError,
   NotFound,
   Unauthorized,
 } from '@utils/http/errors/controlled-errors';
 import { HttpError } from '@utils/http/errors/http-errors';
-import { InternalServerError } from '@utils/http/errors/internal-errors';
 import bcrypt from 'bcryptjs';
 
 interface WorkspaceAccesses {
@@ -19,7 +19,7 @@ interface WorkspaceAccesses {
 }
 
 interface Authentication {
-  user: User;
+  user: { id: string; name: string; email: string; cpf: string };
   accesses: WorkspaceAccesses[];
   token: string;
 }
@@ -55,9 +55,14 @@ export default async function authentication(
     }));
 
     return {
-      user,
+      user: {
+        id: user.id,
+        email: user.email,
+        name: user.name,
+        cpf: user.cpf,
+      },
       accesses,
-      token: generateToken(user),
+      token: generateToken({ id: user.id }),
     };
   } catch (error) {
     if (error instanceof HttpError) {
