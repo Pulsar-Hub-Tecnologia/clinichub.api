@@ -14,11 +14,9 @@ export async function ensureProfile(
   try {
     const tokenId = req.userId;
 
-    const paramsId = req.params.id;
-
     const user = await User.findOneOrFail(tokenId);
 
-    if (user.id !== paramsId) {
+    if (!user) {
       throw new Unauthorized('You are not authorized');
     } else {
       if (next) return next();
