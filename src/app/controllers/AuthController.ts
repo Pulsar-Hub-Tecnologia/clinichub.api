@@ -47,6 +47,8 @@ class AuthController {
       const { email, token }: UserInterface = req.body;
 
       const auth = await validateEmailAndAuthenticate(email, token);
+
+      console.log('EMAIL VALIDADO COM SUSESSU')
       // Envie a resposta após o envio do email
       res.status(200).json(auth);
     } catch (error) {

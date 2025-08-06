@@ -108,7 +108,7 @@ export default async function createAccountService({
       `Valide sua conta, ${userName}!`,
       {
         client,
-        userName,
+        name: userName,
         token,
         email
       },
