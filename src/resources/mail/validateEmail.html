@@ -408,9 +408,7 @@
     </style>
   </head>
   <body>
-    <span class="preheader"
-      >Recupere sua senha acessando o link desse e-mail!</span
-    >
+    <span class="preheader">Verificação de conta</span>
     <table
       role="presentation"
       border="0"
@@ -453,7 +451,7 @@
                     <tr>
                       <td>
                         <h4 style="color: #06001e; line-height: 40px">
-                          Recuperação de senha
+                          Valide sua conta
                         </h4>
                         <h4
                           style="
@@ -471,18 +469,15 @@
                             margin-top: 0;
                           "
                         >
-                          Você recebeu este e-mail porque fez uma solicitação
-                          para recuperar sua senha de acesso!
-                        </p>
-                        <p style="font-weight: 600">
-                          Recupere sua senha clicando no botão abaixo:
+                          Para acessar sua conta, clique no link abaixo para
+                          validar seu e-mail
                         </p>
 
                         <a
-                          href="{{client}}/recover/{{token}}/{{email}}"
+                          href="{{client}}/validate-email/{{token}}/{{email}}"
                           style="width: 100%"
                         >
-                          <button>Recuperar senha</button>
+                          <button>Validar e-mail</button>
                         </a>
                       </td>
                     </tr>
