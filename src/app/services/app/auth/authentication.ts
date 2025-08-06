@@ -19,7 +19,7 @@ interface WorkspaceAccesses {
 }
 
 interface Authentication {
-  user: User;
+  user: { id: string; name: string; email: string; cpf: string };
   accesses: WorkspaceAccesses[];
   token: string;
 }
@@ -55,7 +55,12 @@ export default async function authentication(
     }));
 
     return {
-      user,
+      user: {
+        id: user.id,
+        email: user.email,
+        name: user.name,
+        cpf: user.cpf,
+      },
       accesses,
       token: generateToken({ id: user.id }),
     };

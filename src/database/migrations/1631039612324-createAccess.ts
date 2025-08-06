@@ -29,17 +29,17 @@ export class createAccess1631039612324 implements MigrationInterface {
             default: `'OWNER'`,
           },
           {
-            name: 'createdAt',
+            name: 'created_at',
             type: 'timestamp',
             default: 'now()',
           },
           {
-            name: 'updatedAt',
+            name: 'updated_at',
             type: 'timestamp',
             default: 'now()',
           },
           {
-            name: 'deletedAt',
+            name: 'deleted_at',
             type: 'timestamp',
             isNullable: true,
           },

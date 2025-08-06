@@ -1,23 +1,11 @@
 import { Request, Response } from 'express';
-import Users from '@entities/User';
-import emailValidator from '@utils/emailValidator';
 import createAccountService from '../services/app/account/create';
 import validateAccountService from '../services/app/account/validate';
 import { HttpError } from '../../utils/http/errors/http-errors';
-import updateUserService from '../services/app/account/update';
+import updateAccountService from '../services/app/account/update';
 import findAccount from '../services/app/account/find';
-
-interface AccountInterface {
-  id?: string;
-  name: string;
-  cpf: string;
-  email: string;
-  regional_council_number?: string;
-  picture?: string;
-  token: string;
-  password: string;
-  secret?: string;
-}
+import findAccessesService from '../services/app/account/find-accesses';
+import signWorkspaceService from '../services/app/account/sign-workspace';
 
 interface CreateAccountBody {
   workspace_type: 'PERSONAL' | 'BUSINESS';
@@ -35,9 +23,7 @@ class AccountController {
     try {
       const user = await findAccount(req.userId);
 
-      res.status(200).json({
-        message: 'Success!',
-        user });
+      res.status(200).json(user);
       return;
     } catch (error) {
       console.log(error);
@@ -47,7 +33,7 @@ class AccountController {
     }
   }
 
-  public async validateAccount(req: Request, res: Response): Promise<void> {
+  public async validate(req: Request, res: Response): Promise<void> {
     try {
       const field = req.query.field as 'id' | 'email' | 'cpf';
       const value = req.query.value as string;
@@ -58,7 +44,6 @@ class AccountController {
       });
 
       res.status(200).json({
-        message: 'Success!',
         has_user,
       });
       return;
@@ -91,7 +76,7 @@ class AccountController {
 
   public async update(req: Request, res: Response): Promise<void> {
     try {
-      await updateUserService(req.userId, req.body);
+      await updateAccountService(req.userId, req.body);
       res.status(204).send({ message: 'Usuário atualizado com sucesso' });
     } catch (error) {
       console.log(error);
@@ -100,6 +85,36 @@ class AccountController {
       return;
     }
   }
+
+  public async accesses(req: Request, res: Response): Promise<void> {
+    try {
+      const accesses = await findAccessesService(req.userId);
+      res.status(200).json(accesses);
+      return;
+    } catch (error) {
+      console.log(error);
+      if (error instanceof HttpError)
+        res.status(error.status).json({ message: error.message });
+      return;
+    }
+  }
+
+  public async signWorkspace(req: Request, res: Response): Promise<void> {
+    try {
+      const { workspace_id } = req.body
+
+      const workspace_token = await signWorkspaceService(workspace_id);
+
+      res.status(200).json(workspace_token);
+      return;
+    } catch (error) {
+      console.log(error);
+      if (error instanceof HttpError)
+        res.status(error.status).json({ message: error.message });
+      return;
+    }
+  }
+
 }
 
 export default new AccountController();

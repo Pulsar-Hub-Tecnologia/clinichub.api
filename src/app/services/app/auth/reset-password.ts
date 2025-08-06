@@ -45,6 +45,6 @@ export default async function resetPasswordService(
     if (error instanceof HttpError) {
       throw error;
     }
-    throw new InternalServerError('Erro ao autenticar com a plataforma');
+    throw new InternalServerError('Erro ao redefinir senha.');
   }
 }
