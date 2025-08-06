@@ -102,7 +102,7 @@ export default async function createAccountService({
 
     const token = generateToken({ id: user.id, email: user.email })
 
-    const mail = await sendMail(
+    await sendMail(
       'validateEmail',
       'no-reply',
       `Valide sua conta, ${userName}!`,
@@ -113,10 +113,6 @@ export default async function createAccountService({
         email
       },
     );
-
-    if (!mail.data?.id) {
-      throw new InternalServerError('Erro ao enviar e-mail de boas vindas');
-    }
 
     return {
       id: user.id,
