@@ -52,7 +52,7 @@ routes.get('/', (req, res) => {
 
 routes.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 routes.use('/auth/', AuthRoutes);
-routes.use('/account', ensureAuthenticated, ensureProfile, AccountRoutes);
+routes.use('/account', AccountRoutes);
 routes.use('/workspace', ensureAuthenticated, ensureWorkspace, ensureAdmin, AccountRoutes);
 
 export default routes;
