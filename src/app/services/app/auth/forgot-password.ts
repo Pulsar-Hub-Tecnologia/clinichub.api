@@ -34,7 +34,7 @@ export default async function forgotPasswordService(
       reset_password_expires: now,
     });
 
-    const client = process.env.CLIENT_CONNECTION;
+    const client = process.env.CLIENT_URL;
 
     // Envie o email e aguarde a conclusão antes de enviar a resposta
     const mail = await sendMail(
