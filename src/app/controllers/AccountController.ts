@@ -6,6 +6,7 @@ import updateAccountService from '../services/app/account/update';
 import findAccount from '../services/app/account/find';
 import findAccessesService from '../services/app/account/find-accesses';
 import signWorkspaceService from '../services/app/account/sign-workspace';
+import resendValidateEmailService from '../services/app/account/resend-validate-email';
 
 interface CreateAccountBody {
   workspace_type: 'PERSONAL' | 'BUSINESS';
@@ -121,6 +122,7 @@ class AccountController {
       return;
     }
   }
+
 
 }
 

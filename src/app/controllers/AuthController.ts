@@ -8,6 +8,7 @@ import forgotPasswordService from '../services/app/auth/forgot-password';
 import resetPasswordService from '../services/app/auth/reset-password';
 import { HttpError } from '@utils/http/errors/http-errors';
 import validateEmailAndAuthenticate from '../services/app/account/validate-email';
+import resendValidateEmailService from '../services/app/account/resend-validate-email';
 
 dotenv.config();
 
@@ -53,6 +54,21 @@ class AuthController {
       res.status(200).json(auth);
     } catch (error) {
       console.error(error);
+      if (error instanceof HttpError)
+        res.status(error.status).json({ message: error.message });
+      return;
+    }
+  }
+  public async resendValidateEmail(req: Request, res: Response): Promise<void> {
+    try {
+      const { email } = req.body
+
+      const workspace_token = await resendValidateEmailService(email);
+
+      res.status(200).json(workspace_token);
+      return;
+    } catch (error) {
+      console.log(error);
       if (error instanceof HttpError)
         res.status(error.status).json({ message: error.message });
       return;
