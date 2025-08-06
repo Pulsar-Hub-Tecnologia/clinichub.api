@@ -7,8 +7,8 @@ import updateWorkspaceService from '../services/app/wokspace/update';
 /**
  * @swagger
  * tags:
- *   name: Acessos
- *   description: Operações relativas aos acessos
+ *   name: Workspace
+ *   description: Operações relativas aos workspaces
  */
 
 class UserController {

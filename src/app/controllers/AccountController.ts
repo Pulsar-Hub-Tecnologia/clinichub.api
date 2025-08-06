@@ -18,6 +18,13 @@ interface CreateAccountBody {
   cnpj?: string;
 }
 
+/**
+ * @swagger
+ * tags:
+ *   name: Conta
+ *   description: Operações relativas à conta do usuário
+ */
+
 class AccountController {
   public async find(req: Request, res: Response): Promise<void> {
     try {
