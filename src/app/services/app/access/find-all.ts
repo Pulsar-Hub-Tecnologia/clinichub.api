@@ -32,7 +32,7 @@ export default async function findAccessService(access_id: string): Promise<Acce
       throw error;
     }
     throw new InternalServerError(
-      'Falha interna ao verificar se a conta existe!',
+      'Erro ao buscar acesssos.',
     );
   }
 }
