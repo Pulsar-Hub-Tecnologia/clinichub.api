@@ -1,10 +1,10 @@
 import Router from 'express';
 import AuthRoutes from './auth.routes';
 import AccountRoutes from './account.routes';
+import WorkspaceRoutes from './workspace.routes';
 import swaggerJsdoc from 'swagger-jsdoc';
 import swaggerUi from 'swagger-ui-express';
 import { ensureAuthenticated } from '@middlewares/ensureAuthenticated';
-import { ensureProfile } from '@middlewares/ensureProfile';
 import { ensureWorkspace } from '@middlewares/ensureWorkspace';
 import { ensureAdmin } from '@middlewares/ensureAdmin';
 
@@ -53,6 +53,6 @@ routes.get('/', (req, res) => {
 routes.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 routes.use('/auth/', AuthRoutes);
 routes.use('/account', AccountRoutes);
-routes.use('/workspace', ensureAuthenticated, ensureWorkspace, ensureAdmin, AccountRoutes);
+routes.use('/workspace', ensureAuthenticated, ensureWorkspace, ensureAdmin, WorkspaceRoutes);
 
 export default routes;
