@@ -13,7 +13,7 @@ export async function ensureWorkspace(
   next: NextFunction,
 ): Promise<Response | any> {
   try {
-    const workspace_token = req.headers.workspace_token as string;
+    const workspace_token = req.headers['x-workspace-token'] as string;
 
     if (!workspace_token) throw new Unauthorized('No Workspace Token Provided');
 
