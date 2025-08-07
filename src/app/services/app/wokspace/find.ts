@@ -1,4 +1,3 @@
-import Access from '@entities/Access';
 import Workspace from '@entities/Workspace';
 import { InternalServerError, NotFound } from '@utils/http/errors/controlled-errors';
 import { HttpError } from '@utils/http/errors/http-errors';
@@ -6,6 +5,8 @@ import { HttpError } from '@utils/http/errors/http-errors';
 export default async function findWorkspaceService(workspace_id: string): Promise<Workspace>{
   try {
 
+    console.log('Workspace Sercixce find')
+    
     const workspace = await Workspace.findOne(workspace_id);
 
     if (!workspace) {
