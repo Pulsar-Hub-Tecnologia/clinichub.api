@@ -61,6 +61,21 @@ export class createWorkspace1631039612323 implements MigrationInterface {
             isNullable: true,
           },
           {
+            name: 'appointment_online',
+            type: 'boolean',
+            default: false,
+          },
+          {
+            name: 'whatsapp_notification',
+            type: 'boolean',
+            default: false,
+          },
+          {
+            name: 'self_register',
+            type: 'boolean',
+            default: false,
+          },
+          {
             name: 'created_at',
             type: 'timestamp',
             default: 'now()',

@@ -38,6 +38,15 @@ class Workspace extends BaseEntity {
   @Column({ nullable: true })
   email!: string;
 
+  @Column({ default: false })
+  appointment_online!: boolean;
+
+  @Column({ default: false })
+  whatsapp_notification!: boolean;
+
+  @Column({ default: false })
+  self_register!: boolean;
+
   @Column({ type: 'jsonb', nullable: true })
   address!: {
     cep: string;
