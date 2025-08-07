@@ -17,14 +17,7 @@ export async function ensureWorkspace(
 
     if (!workspace_token) throw new Unauthorized('No Workspace Token Provided');
 
-    const parts = workspace_token.split(' ');
-
-    if (parts.length !== 2) throw new Unauthorized('Workspace Token error');
-
-    const [bearer, token] = parts;
-
-    if (!/^Bearer$/.test(bearer))
-      throw new Unauthorized('Workspace Token Malformatted');
+    const token = workspace_token;
 
     jwt.verify(token, `${process.env.SECRET}`, async (err, decoded: any) => {
       if (err) throw new Unauthorized('Token invalid');
