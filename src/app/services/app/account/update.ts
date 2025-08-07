@@ -21,6 +21,12 @@ export default async function updateAccountService(id: string, body: any) {
     const valuesToUpdate = {
       name: name || user.name,
       email: email || user.email,
+      phone: body.phone,
+      bio: body.bio,
+      picture: body.picture ,
+      especiality: body.especiality,
+      date_birth: body.date_birth,
+      regional_council_number: body.regional_council_number,
     };
 
     await User.update(user.id, { ...valuesToUpdate });

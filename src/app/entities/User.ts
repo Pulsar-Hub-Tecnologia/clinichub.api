@@ -38,7 +38,7 @@ class User extends BaseEntity {
   especiality?: string;
 
   @Column({ nullable: true })
-  dateBirth?: string;
+  date_birth?: string;
 
   @Column({ nullable: true })
   bio?: string;

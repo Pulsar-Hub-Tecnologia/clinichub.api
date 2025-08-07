@@ -85,7 +85,7 @@ class AccountController {
   public async update(req: Request, res: Response): Promise<void> {
     try {
       await updateAccountService(req.userId, req.body);
-      res.status(204).send({ message: 'Usuário atualizado com sucesso' });
+      res.status(200).send({ message: 'Usuário atualizado com sucesso' });
     } catch (error) {
       console.log(error);
       if (error instanceof HttpError)
