@@ -16,6 +16,7 @@ export async function ensureAdmin(
   try {
     const userId = req.userId;
 
+    console.log('ensureAdmin UserId', userId)
     const user = await User.findOneOrFail(userId);
 
     if (!user) {
@@ -23,6 +24,7 @@ export async function ensureAdmin(
     }
 
     const workspaceId = req.workspaceId;
+    console.log('ensureAdmin workspaceId', workspaceId)
 
     const workspace = await Workspace.findOneOrFail(workspaceId);
 
