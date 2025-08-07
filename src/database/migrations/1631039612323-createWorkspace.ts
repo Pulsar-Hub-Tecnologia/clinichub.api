@@ -39,6 +39,27 @@ export class createWorkspace1631039612323 implements MigrationInterface {
             type: 'jsonb',
             isNullable: true,
           },
+          // New columns after metadata
+          {
+            name: 'phone',
+            type: 'varchar',
+            isNullable: true,
+          },
+          {
+            name: 'whatsapp',
+            type: 'varchar',
+            isNullable: true,
+          },
+          {
+            name: 'email',
+            type: 'varchar',
+            isNullable: true,
+          },
+          {
+            name: 'address',
+            type: 'jsonb',
+            isNullable: true,
+          },
           {
             name: 'created_at',
             type: 'timestamp',

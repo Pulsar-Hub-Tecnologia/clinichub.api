@@ -4,12 +4,7 @@ import {
   CreateDateColumn,
   DeleteDateColumn,
   Entity,
-  JoinColumn,
-  JoinTable,
-  ManyToMany,
-  ManyToOne,
   OneToMany,
-  OneToOne,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
@@ -33,6 +28,28 @@ class Workspace extends BaseEntity {
 
   @Column({ type: 'jsonb', nullable: true })
   metadata!: any;
+
+  @Column({ nullable: true })
+  phone!: string;
+
+  @Column({ nullable: true })
+  whatsapp!: string;
+
+  @Column({ nullable: true })
+  email!: string;
+
+  @Column({ type: 'jsonb', nullable: true })
+  address!: {
+    cep: string;
+    number?: number;
+    street: string;
+    neighborhood: string;
+    city: string;
+    state: {
+      acronym: string;
+      name: string;
+    };
+  };
 
   @OneToMany(() => Access, (access) => access.workspace)
   accesses!: Access[];

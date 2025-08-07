@@ -32,6 +32,18 @@ class User extends BaseEntity {
   regional_council_number!: string;
 
   @Column({ nullable: true })
+  phone?: string;
+
+  @Column({ nullable: true })
+  especiality?: string;
+
+  @Column({ nullable: true })
+  dateBirth?: string;
+
+  @Column({ nullable: true })
+  bio?: string;
+
+  @Column({ nullable: true })
   picture!: string;
 
   @Column({ nullable: true, default: false })
@@ -45,6 +57,9 @@ class User extends BaseEntity {
 
   @Column({ nullable: true })
   token_reset_password!: string;
+
+  // @Column({nullable: true})
+  // code_2_fa_hash?: string;
 
   @Column({ nullable: true, type: 'timestamp' })
   reset_password_expires!: Date;
