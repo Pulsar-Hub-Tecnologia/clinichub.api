@@ -16,6 +16,8 @@ class UserController {
     try {
       const access = await findWorkspaceService(req.workspaceId)
 
+      console.log('FIND WQORKPSACE', access)
+      console.log('FIND WQORKPSACE, workspaceId', req.workspaceId)
       res.status(200).json(access);
     } catch (error) {
       console.error(error);
