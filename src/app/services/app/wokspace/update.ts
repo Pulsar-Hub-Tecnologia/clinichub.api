@@ -3,9 +3,23 @@ import Workspace from '@entities/Workspace';
 import { InternalServerError, NotFound } from '@utils/http/errors/controlled-errors';
 import { HttpError } from '@utils/http/errors/http-errors';
 
-interface UpdateWorkspaceData{
+interface UpdateWorkspaceData {
   name?: string;
-  cnpj?: string
+  cnpj?: string;
+  phone?: string;
+  whatsapp?: string;
+  email?: string;
+  address?: {
+    cep: string;
+    number?: number;
+    street: string;
+    neighborhood: string;
+    city: string;
+    state: {
+      acronym: string;
+      name: string;
+    };
+  };
 }
 
 export default async function updateWorkspaceService(workspace_id: string, data: UpdateWorkspaceData): Promise<{ message: string }>{
@@ -19,7 +33,11 @@ export default async function updateWorkspaceService(workspace_id: string, data:
 
     const valuesToUpdate = {
       name: data.name || workspace.name,
-      email: data.cnpj || workspace.cnpj,
+      cnpj: data.cnpj || workspace.cnpj,
+      phone: data.phone || workspace.phone,
+      whatsapp: data.whatsapp || workspace.whatsapp,
+      email: data.email || workspace.email,
+      address: data.address || workspace.address,
     };
 
     await Workspace.update(workspace.id, { ...valuesToUpdate });
