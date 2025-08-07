@@ -34,7 +34,9 @@ export async function ensureAdmin(
 
     const access = await Access.findOne({ where: { user, workspace } });
 
-    if (!access || access.role !== 'ADMIN' || 'OWNER') {
+
+
+    if (!access || (access.role !== 'ADMIN' && access.role !== 'OWNER')) {
       throw new Unauthorized();
     }
 
